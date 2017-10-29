@@ -1,0 +1,36 @@
+{
+"manifest_version": 2,
+"name": "Сохранение историй",
+"short_name": "Save stories",
+"author": "Anton Bolotskikh",
+"description": "Сохраняйте истории с vk.com.",
+"homepage_url": "https://vk.com/savestories",
+"version": "0.51",
+"icons":{
+"16":"16.png",
+"24":"24.png",
+"32":"32.png",
+"48":"48.png",
+"128":"128.png",
+"256":"256.png",
+"512":"512.png"
+},
+"permissions" : [
+  "declarativeContent",
+  "*://*.vk.com/*"
+],
+"background": {
+  "scripts": ["background.js"],
+  "persistent": false
+},
+"page_action":{
+"default_title": "Сохранение историй Vk",
+"default_icon": {
+  "16":"16.png",
+  "24":"24.png",
+  "32":"32.png",
+  "49":"49.png",
+  "48":"48.png"
+}
+}
+}
