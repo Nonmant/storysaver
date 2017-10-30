@@ -4,8 +4,6 @@
 
 // When the extension is installed or upgraded ...
 chrome.runtime.onInstalled.addListener(function() {
-
-  chrome.tabs.onUpdated.addListener(addButton);
   // Replace all rules ...
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     // With a new rule ...
@@ -26,3 +24,5 @@ chrome.runtime.onInstalled.addListener(function() {
 function addButton(tab) {
   chrome.tabs.executeScript({file: 'add.js'});
 };
+
+  chrome.tabs.onUpdated.addListener(addButton);
