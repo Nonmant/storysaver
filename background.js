@@ -4,6 +4,8 @@
 
 // When the extension is installed or upgraded ...
 chrome.runtime.onInstalled.addListener(function() {
+
+
   // Replace all rules ...
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     // With a new rule ...
@@ -25,4 +27,10 @@ function addButton(tab) {
   chrome.tabs.executeScript({file: 'add.js'});
 };
 
-  chrome.tabs.onUpdated.addListener(addButton);
+chrome.tabs.onUpdated.addListener(addButton);
+chrome.pageAction.onClicked.addListener(loadAnon);
+function loadAnon(tab){
+  chrome.pageAction.setIcon({tabId:tab.id, path:'48active.png'});
+  chrome.tabs.executeScript({file: "anon.js"});
+  chrome.pageAction.setTitle({tabId:tab.id, title:'Анонимное сохранение активно. Откройте любую историю.'});
+}

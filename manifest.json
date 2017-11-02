@@ -1,11 +1,11 @@
 {
 "manifest_version": 2,
-"name": "Сохранение историй",
+"name": "Сохранение историй. Анонимно.",
 "short_name": "Save stories",
 "author": "Anton Bolotskikh",
-"description": "Сохраняйте истории с vk.com.",
+"description": "Сохраняйте истории с vk.com. Анонимно.",
 "homepage_url": "https://vk.com/savestories",
-"version": "0.51",
+"version": "0.6",
 "icons":{
 "16":"16.png",
 "24":"24.png",
@@ -24,7 +24,7 @@
   "persistent": false
 },
 "page_action":{
-"default_title": "Сохранение историй Vk",
+"default_title": "Если активно - нажмите для анонимного сохранения",
 "default_icon": {
   "16":"16.png",
   "24":"24.png",
