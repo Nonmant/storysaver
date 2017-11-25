@@ -1,0 +1,19 @@
+img{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+hr{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+a{
+  text-decoration: none; !important
+}
+a:visited{
+  filter: grayscale(100%);
+  opacity: 0.5;
+}
