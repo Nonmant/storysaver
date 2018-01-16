@@ -1,11 +1,11 @@
 {
 "manifest_version": 2,
-"name": "Сохранение историй. Анонимно.",
+"name": "Сохранение историй ВК. Анонимно.",
 "short_name": "Save stories",
 "author": "Anton Bolotskikh",
 "description": "Сохраняйте истории с vk.com. Анонимно.",
 "homepage_url": "https://vk.com/savestories",
-"version": "0.61",
+"version": "0.63",
 "icons":{
 "16":"16.png",
 "24":"24.png",

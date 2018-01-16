@@ -6,47 +6,53 @@ var makeBody=function(){
     var popupBody=document.createElement('body');
     for(var i in stories){
       var story=stories[i];
-      var aPerson=document.createElement('a');
+      var aPerson=document.createElement('button');
+      aPerson.id='';
       var dPerson=document.createElement('div');
-      //aPerson.title='Сохранить все истории пользователя';
-      //aPerson.href='#';
-      //aPerson.setAttribute('onclick','alert(`aPerson clicked`);downloadToBackground(`');
-      var iPerson=document.createElement('img');
-      if(story.author.photo.indexOf('http')==-1)iPerson.src='https://vk.com/images/icons/msg_error.png';
-      else iPerson.src=story.author.photo;
-      aPerson.appendChild(iPerson);
+      aPerson.title='Сохранить все истории пользователя';
+
+      var aPersonImage=story.author.photo.indexOf('http')!=-1?story.author.photo:'https://vk.com/images/icons/msg_error.png';
+      aPerson.setAttribute('style', 'background-image: url(' + aPersonImage + ');');
+
       var pPerson=document.createElement('span');
       pPerson.innerText=story.author.name.split(' ')[0];
       aPerson.appendChild(pPerson);
-      //popupBody.appendChild(aPerson);
       dPerson.appendChild(document.createElement('hr'));
-      //popupBody.appendChild(document.createElement('hr'));
 
       for(var j in story.items){
         var item=story.items[j];
-        var aItem=document.createElement('a');
-        aItem.title='Сохранить историю';
-        aItem.href=(item.type==`photo`)?item.photo_url:item.video_url;
-        //aItem.setAttribute('onclick','downloadToBackground(`'+aItem.href+'`)');
-        //aPerson.setAttribute('onclick', aPerson.getAttribute('onclick') +aItem.href+',');
-        aItem.download=true;
-        var iItem=document.createElement('img');
-        iItem.src=item.preview_url;
-        aItem.appendChild(iItem);
-        //popupBody.appendChild(aItem);
+        var aItem=document.createElement('button');
+        var sItem=document.createElement('span');
+          if(item.type==`photo`){
+            aItem.id=item.photo_url;
+            aItem.title='Сохранить фото';
+            sItem.setAttribute('style', 'background-image:url('+item.photo_url+');');
+          }
+          else {
+            aItem.id=item.video_url;
+            aItem.title='Сохранить видео';
+            sItem.setAttribute('style', 'background-image:url('+item.first_frame+');');
+          }
+        aPerson.id+=aItem.id+',';
+        aItem.className='story';
+        aItem.setAttribute('style', 'background-image: url(' + item.preview_url + ');');
+        aItem.appendChild(sItem);
         dPerson.appendChild(aItem);
       }
-      //aPerson.setAttribute('onclick', aPerson.getAttribute('onclick')+'`);');
       dPerson.insertBefore(aPerson, dPerson.firstChild);
       popupBody.appendChild(dPerson);
       popupBody.appendChild(document.createElement('p'));
     }
+    var aHome=document.createElement('a');
+    aHome.href='https://vk.com/savestories';
+    aHome.innerText='О\u00a0расширении';
+    aHome.target='_blank';
+    popupBody.appendChild(aHome);
     window.postMessage({from:'document savestories', popupBody:popupBody.innerHTML}, '*');
   }
   else {
     window.postMessage({from:'document savestories', popupBody:'none'}, '*');
   }
-  //document.body.setAttribute('onclick','');
   document.head.removeChild(document.getElementById('savestories'));
 };
 
@@ -62,9 +68,6 @@ function contentListen(request, sender){
     script.text=String(makeBody).slice(12, -1);
     script.id='savestories';
     document.head.appendChild(script);
-/*document.body.setAttribute("onclick", String(makeBody).slice(12, -1));
-var event = new MouseEvent('click');
-document.body.dispatchEvent(event);*/
   }
 }
 
@@ -75,7 +78,7 @@ window.addEventListener("message", function(event) {
     //alert('received message in content event listener');
     if(event.data.from=='document savestories'){
       //alert("content event listener: from document");
-      chrome.runtime.sendMessage({from:'content savestories', popupBody:event.data.popupBody});
+      chrome.runtime.sendMessage({from:'content savestories', popupBody:event.data.popupBody, links:event.data.links});
     }
   }
 });
