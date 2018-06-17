@@ -5,7 +5,7 @@
 "author": "Anton Bolotskikh",
 "description": "Сохраняйте истории с vk.com. Анонимно.",
 "homepage_url": "https://vk.com/savestories",
-"version": "0.63",
+"version": "0.65.1",
 "icons":{
 "16":"16.png",
 "24":"24.png",
@@ -19,7 +19,8 @@
   "downloads",
   "declarativeContent",
   "*://*.vk.com/*",
-  "*://*.userapi.com/*"
+  "*://*.userapi.com/*",
+  "storage"
 ],
 "background": {
   "scripts": ["background.js"],
@@ -41,5 +42,11 @@
   "49":"49.png",
   "48":"48.png"
 }
+},
+"options_page": "options.html",
+"options_ui":{
+  "page":"options.html",
+  "chrome_style":false,
+  "open_in_tab":true
 }
 }

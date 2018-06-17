@@ -21,7 +21,6 @@ function sendBackground(tabId){
 
 function backgroundListen(message){
   //alert('background listener');
-
   if(message.from)
   switch (message.from) {
 

@@ -1,9 +1,27 @@
 body{
+  position: relative;
+  background-color: white;
   font-size: 13px;
   text-align: center;
   overflow:  hidden;
   min-width:60px;
   min-height: 108px;
+}
+
+.settings{
+  cursor: pointer;
+  opacity: 0.5;
+  position: absolute;
+  top:0px;
+  right: 0px;
+  width: 24px;
+  height: 24px;
+  background: url(settings24.png) no-repeat;
+  transition: opacity 160ms linear;
+}
+
+.settings:hover{
+  opacity: 1;
 }
 
 hr{
@@ -49,7 +67,7 @@ a:visited{
     color: #2a5885;
 }
 
-.story:hover span{
+.story:hover span, .story.hover span{
   visibility: visible;
   width: 60px;
   height: 108px;
@@ -60,7 +78,33 @@ a:visited{
   top:50%;
   transform: translate(-50%,-50%);
   opacity: 1;
-  transition-delay: 0.5s;
+  transition-delay: 0.3s;
+}
+
+.photo::before{
+  opacity: 0.9;
+  background: url(https:vk.com/images/post_icon.png) no-repeat;
+  background-position: left -65px;
+  width: 22px;
+  height: 22px;
+  content: '';
+  transition: 0s;
+  display: block;
+  background-color: white;
+  border-radius: 5px 50% 50% 50%;
+}
+
+.video::before{
+  opacity: 0.9;
+  background: url(https:vk.com/images/post_icon.png) no-repeat;
+  background-position: left -87px;
+  width: 22px;
+  height: 22px;
+  content: '';
+  transition: 0s;
+  display: block;
+  background-color: white;
+  border-radius: 5px 50% 50% 50%;
 }
 
 .story span{

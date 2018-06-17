@@ -2,8 +2,13 @@ var makeBody=function(){
   //alert('document: script run');
   var stories=cur.stories_list_feed;
   if(!stories)stories=cur.stories_list_profile;
+  if(!stories)stories=cur.stories_list_group_stories
   if(stories){
     var popupBody=document.createElement('body');
+    var settings=document.createElement('div');
+    settings.className='settings';
+    settings.title='Настройки';
+    popupBody.appendChild(settings);
     for(var i in stories){
       var story=stories[i];
       var aPerson=document.createElement('button');
@@ -25,12 +30,12 @@ var makeBody=function(){
         var sItem=document.createElement('span');
           if(item.type==`photo`){
             aItem.id=item.photo_url;
-            aItem.title='Сохранить фото';
+            sItem.className='photo';
             sItem.setAttribute('style', 'background-image:url('+item.photo_url+');');
           }
           else {
             aItem.id=item.video_url;
-            aItem.title='Сохранить видео';
+            sItem.className='video';
             sItem.setAttribute('style', 'background-image:url('+item.first_frame+');');
           }
         aPerson.id+=aItem.id+',';
