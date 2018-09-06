@@ -1,8 +1,15 @@
 var makeBody=function(){
   //alert('document: script run');
-  var stories=cur.stories_list_feed;
-  if(!stories)stories=cur.stories_list_profile;
-  if(!stories)stories=cur.stories_list_group_stories
+  var stories, count=0;
+
+  for(var i in cur){
+    if(Object.keys(cur)[count].indexOf("stories_list")!=-1){
+      stories=cur[i];
+      break;
+    }
+    ++count;
+  }
+
   if(stories){
     var popupBody=document.createElement('body');
     var settings=document.createElement('div');

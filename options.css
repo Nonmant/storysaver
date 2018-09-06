@@ -81,7 +81,7 @@ a:visited{
 
 #ad{
   color: black;
-  opacity: 0.05;
+  opacity: 0.3;
   transition: opacity 160ms linear;
 }
 #ad:hover{
