@@ -8,8 +8,8 @@ var makeBody=function(){
       break;
     }
     ++count;
-  }
-
+  };
+  
   if(stories){
     var popupBody=document.createElement('body');
     var settings=document.createElement('div');

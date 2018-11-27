@@ -1,16 +1,16 @@
-chrome.runtime.onInstalled.addListener(function() {
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-    chrome.declarativeContent.onPageChanged.addRules([
-      {
-        conditions: [
-          new chrome.declarativeContent.PageStateMatcher({
-            pageUrl: { urlContains: 'vk.com' },
-          })
-        ],
-        actions: [ new chrome.declarativeContent.ShowPageAction()]
-      }
-    ]);
-  });
+function initializePageAction(tab) {
+  if (tab.url.indexOf("vk.com")!=-1) {
+    browser.pageAction.show(tab.id);
+  }
+}
+var gettingAllTabs = browser.tabs.query({});
+gettingAllTabs.then((tabs) => {
+  for (let tab of tabs) {
+    initializePageAction(tab);
+  }
+});
+browser.tabs.onUpdated.addListener((id, changeInfo, tab) => {
+  initializePageAction(tab);
 });
 
 function sendBackground(tabId){
@@ -23,7 +23,6 @@ function backgroundListen(message){
   //alert('background listener');
   if(message.from)
   switch (message.from) {
-
     case 'content savestories':
     //alert('message from content');
     if(message.popupBody!='none'){
@@ -44,7 +43,6 @@ function backgroundListen(message){
     if(message.tabId)
     sendBackground(message.tabId);
     break;
-
     default:
   }
 }

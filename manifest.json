@@ -17,14 +17,13 @@
 },
 "permissions" : [
   "downloads",
-  "declarativeContent",
+  "tabs",
   "*://*.vk.com/*",
   "*://*.userapi.com/*",
   "storage"
 ],
 "background": {
-  "scripts": ["background.js"],
-  "persistent": false
+  "scripts": ["background.js"]
 },
 "content_scripts": [
   {
@@ -43,7 +42,6 @@
   "48":"48.png"
 }
 },
-"options_page": "options.html",
 "options_ui":{
   "page":"options.html",
   "chrome_style":false,

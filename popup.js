@@ -2,15 +2,7 @@ window.onload = function() {
   //alert('popup is loaded!');
   let noStorage=true;
   if(chrome.storage){
-    if(chrome.storage.sync){
-      noStorage=false;
-      chrome.storage.sync.get({customSizeStyleText : '', customDelayText : ''},
-      function(items){
-        document.getElementById('customSizeStyle').textContent=items.customSizeStyleText;
-        document.getElementById('customDelayStyle').textContent=items.customDelayText;
-      });
-    }
-    else if (chrome.storage.local) {
+    if (chrome.storage.local) {
       noStorage=false;
       function onGot(item){
         if(item.customSizeStyleText){
@@ -20,7 +12,7 @@ window.onload = function() {
           document.getElementById('customDelayStyle').textContent=item.customDelayText;
         }
       };
-      let getting=chrome.storage.local.get(['customSizeStyleText', 'customDelayText']);
+      var getting=browser.storage.local.get(['customSizeStyleText', 'customDelayText']);
       getting.then(onGot, null);
     }
   }

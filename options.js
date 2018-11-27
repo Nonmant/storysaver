@@ -1,36 +1,7 @@
 slideShowTimer='', customSizeStyleTextG='',customSizeStyleValueG='', customDelayTextG='', customDelayValueG=true;
 
 if(chrome.storage){
-  if(chrome.storage.sync){
-    getCustomDelay=function functionName() {
-      chrome.storage.sync.get({customDelayText : '', customDelayValue: true},
-      function(items){
-        customDelayTextG=items.customDelayText;
-        customDelayValueG=items.customDelayValue;
-        document.getElementById('delayCheckbox').checked=customDelayValueG;
-        setCustomDelay();
-      });
-    };
-
-    saveCustomDelay=function() {
-      chrome.storage.sync.set({customDelayText : customDelayTextG, customDelayValue: customDelayValueG});
-    };
-
-    getCustomSizeStyle=function(){
-      chrome.storage.sync.get({customSizeStyleText : '', customSizeStyleValue: '0.1'},
-      function(items){
-        customSizeStyleTextG=items.customSizeStyleText;
-        customSizeStyleValueG=items.customSizeStyleValue;
-        document.getElementById('prevSizeRange').value=customSizeStyleValueG;
-        setCustomSizeStyle();
-      });
-    };
-
-    saveCustomSizeStyle=function() {
-      chrome.storage.sync.set({customSizeStyleText : customSizeStyleTextG, customSizeStyleValue: customSizeStyleValueG});
-    };
-  }
-  else if (chrome.storage.local) {
+  if (chrome.storage.local) {
 
     getCustomDelay=function(){
       function onGot(item){
@@ -43,11 +14,11 @@ if(chrome.storage){
         }
         setCustomDelay();
       };
-      let getting=chrome.storage.local.get(['customDelayText', 'customDelayValue']);
+      var getting=browser.storage.local.get(['customDelayText', 'customDelayValue']);
       getting.then(onGot,null);
     };
     saveCustomDelay=function() {
-      chrome.storage.local.set({customDelayText : customDelayTextG, customDelayValue: customDelayValueG});
+      browser.storage.local.set({customDelayText : customDelayTextG, customDelayValue: customDelayValueG});
     };
 
 
@@ -62,11 +33,11 @@ if(chrome.storage){
         }
         setCustomSizeStyle();
       };
-      let getting=chrome.storage.local.get(['customSizeStyleText', 'customSizeStyleValue']);
+      var getting=browser.storage.local.get(['customSizeStyleText', 'customSizeStyleValue']);
       getting.then(onGot,null);
     };
     saveCustomSizeStyle=function() {
-      chrome.storage.local.set({customSizeStyleText : customSizeStyleTextG, customSizeStyleValue: customSizeStyleValueG});
+      browser.storage.local.set({customSizeStyleText : customSizeStyleTextG, customSizeStyleValue: customSizeStyleValueG});
     };
   }
 }
