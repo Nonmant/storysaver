@@ -1,3 +1,4 @@
+
 body{
   position: relative;
   background-color: white;
@@ -83,7 +84,7 @@ a:visited{
 
 .photo::before{
   opacity: 0.9;
-  background: url(https:vk.com/images/post_icon.png) no-repeat;
+  background: url(https://vk.com/images/post_icon.png) no-repeat;
   background-position: left -65px;
   width: 22px;
   height: 22px;
@@ -96,7 +97,7 @@ a:visited{
 
 .video::before{
   opacity: 0.9;
-  background: url(https:vk.com/images/post_icon.png) no-repeat;
+  background: url(https://vk.com/images/post_icon.png) no-repeat;
   background-position: left -87px;
   width: 22px;
   height: 22px;

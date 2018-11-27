@@ -1,16 +1,16 @@
 window.onload = function() {
   //alert('popup is loaded!');
   let noStorage=true;
-  if(chrome.storage){
-    if(chrome.storage.sync){
+  if(browser.storage){
+    if(browser.storage.sync){
       noStorage=false;
-      chrome.storage.sync.get({customSizeStyleText : '', customDelayText : ''},
+      browser.storage.sync.get({customSizeStyleText : '', customDelayText : ''},
       function(items){
         document.getElementById('customSizeStyle').textContent=items.customSizeStyleText;
         document.getElementById('customDelayStyle').textContent=items.customDelayText;
       });
     }
-    else if (chrome.storage.local) {
+    else if (browser.storage.local) {
       noStorage=false;
       function onGot(item){
         if(item.customSizeStyleText){
@@ -20,7 +20,7 @@ window.onload = function() {
           document.getElementById('customDelayStyle').textContent=item.customDelayText;
         }
       };
-      let getting=chrome.storage.local.get(['customSizeStyleText', 'customDelayText']);
+      let getting=browser.storage.local.get(['customSizeStyleText', 'customDelayText']);
       getting.then(onGot, null);
     }
   }
@@ -34,19 +34,37 @@ window.onload = function() {
     }
   }
   //
-  chrome.tabs.query({active:true,currentWindow:true},function(tabArray){
-    chrome.runtime.sendMessage({from:'popup savestories',tabId:tabArray[0].id});
+  browser.tabs.query({active:true,currentWindow:true},function(tabArray){
+    browser.runtime.sendMessage({from:'popup savestories',tabId:tabArray[0].id});
 });
 };
 
 function downloadPopup(text){
-  var downloadArray=text.split(',');
-  for(var i in downloadArray){
-    if(downloadArray[i]&&(downloadArray[i].indexOf('.jpg')!=-1||downloadArray[i].indexOf('.mp4')!=-1))chrome.downloads.download({url: downloadArray[i]});
-  }
+  var downloadArray = text.split(',');
+  var tabId;
+  browser.tabs.query({active:true,currentWindow:true},function(tabArray){
+    for (var i in downloadArray) {
+      if (downloadArray[i] && (downloadArray[i].indexOf('.jpg') != -1 || downloadArray[i].indexOf('.mp4') != -1)) {
+        browser.runtime.sendMessage(
+          {
+            from:'popup savestories',
+            tabId:tabArray[0].id,
+            download:{
+              url:downloadArray[i],
+              filename:'savestories'+downloadArray[i].substr(downloadArray[i].lastIndexOf('/') + 1)
+            }
+          }
+        );
+
+      }
+    }
+  });
 }
 function onPopupClick(e){
-  var target=e.target;
+    var target = e.target;
+    if (target == null) {
+        return;
+    }
   while ((!target.id)&&(target!=document.body)) {
     if(target.className=='settings'){
       openSettings();
@@ -57,5 +75,16 @@ function onPopupClick(e){
 }
 document.onclick = onPopupClick;
 function openSettings() {
-  chrome.runtime.openOptionsPage();
+  browser.runtime.openOptionsPage();
 }
+//API bridge for edge
+browser.runtime.openOptionsPage = function (callback) {
+    var optionsPageUrl = myBrowser.runtime.getManifest()["options_page"];
+    //var optionsPageUrl = myBrowser.runtime.getURL(optionsPage);
+    if (typeof callback !== "undefined") {
+        myBrowser.tabs.create({ url: optionsPageUrl }, callback);
+    }
+    else {
+        myBrowser.tabs.create({ url: optionsPageUrl });
+    }
+};

@@ -1,52 +1,58 @@
 {
-"manifest_version": 2,
-"name": "Сохранение историй ВК. Анонимно.",
-"short_name": "Save stories",
-"author": "Anton Bolotskikh",
-"description": "Сохраняйте истории с vk.com. Анонимно.",
-"homepage_url": "https://vk.com/savestories",
-"version": "0.66",
-"icons":{
-"16":"16.png",
-"24":"24.png",
-"32":"32.png",
-"48":"48.png",
-"128":"128.png",
-"256":"256.png",
-"512":"512.png"
-},
-"permissions" : [
-  "downloads",
-  "declarativeContent",
-  "*://*.vk.com/*",
-  "*://*.userapi.com/*",
-  "storage"
-],
-"background": {
-  "scripts": ["background.js"],
-  "persistent": false
-},
-"content_scripts": [
-  {
-    "matches": ["*://*.vk.com/*"],
-    "js": ["content.js"]
+  "manifest_version": 2,
+  "name": "Сохранение историй ВК. Анонимно.",
+  "short_name": "Save stories",
+  "author": "Anton Bolotskikh",
+  "description": "Сохраняйте истории с vk.com. Анонимно.",
+  "homepage_url": "https://vk.com/savestories",
+  "version": "1.66.0.0",
+  "icons": {
+    "24": "24.png",
+    "30": "30.png",
+    "42": "42.png",
+    "54": "54.png",
+    "120": "120.png",
+    "150": "150w.png",
+    "210": "210.png",
+    "270": "270.png",
+    "50": "50.png",
+    "70": "70.png",
+    "90": "90.png"
+  },
+  "permissions": [
+    "downloads",
+    "declarativeContent",
+    "*://*.vk.com/*",
+    "*://*.userapi.com/*",
+    "storage",
+    "tabs"
+  ],
+  "background": {
+    "page": "background.html",
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.vk.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "page_action": {
+    "default_popup": "popup.html",
+    "default_title": "Нажмите для анонимного сохранения",
+    "default_icon": {
+      "20": "20.png",
+      "40": "40.png"
+    }
+  },
+  "options_page": "options.html",
+  "-ms-preload": {
+    "backgroundScript": "backgroundScriptsAPIBridge.js",
+    "contentScript": "contentScriptsAPIBridge.js"
   }
-],
-"page_action":{
-"default_popup": "popup.html",
-"default_title": "Нажмите для анонимного сохранения",
-"default_icon": {
-  "16":"16.png",
-  "24":"24.png",
-  "32":"32.png",
-  "49":"49.png",
-  "48":"48.png"
-}
-},
-"options_page": "options.html",
-"options_ui":{
-  "page":"options.html",
-  "chrome_style":false,
-  "open_in_tab":true
-}
 }

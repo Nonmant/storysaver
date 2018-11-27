@@ -123,6 +123,8 @@ var updateExampleSizes = function(){
   if(!iframeHtml)return;
   iframe.width=iframeHtml.offsetWidth;
   iframe.height=iframeHtml.offsetHeight;
+  iframe.style.width=iframe.width;
+  iframe.style.height=iframe.height;
 }
 
 var onPrevSizeChanged = function(){
@@ -173,6 +175,12 @@ var slideShow = function(){
 }
 
 var onLoad = function(){
+  //https://stackoverflow.com/a/17707328
+  let ifr=document.getElementById("exampleFrame");
+  let docIfr=ifr.contentWindow.document;
+  docIfr.open('text/html', 'replace');
+  docIfr.write(ifr.getAttribute("srcdoc"));
+  docIfr.close();
   //updateExampleSizes();
   getCustomSizeStyle();
   range=document.getElementById('prevSizeRange');

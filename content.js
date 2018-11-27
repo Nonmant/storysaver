@@ -1,15 +1,13 @@
 var makeBody=function(){
   //alert('document: script run');
-  var stories, count=0;
-
-  for(var i in cur){
-    if(Object.keys(cur)[count].indexOf("stories_list")!=-1){
-      stories=cur[i];
-      break;
+    var stories, count = 0;
+    for (var i in cur) {
+        if (Object.keys(cur)[count].indexOf("stories_list") != -1) {
+            stories = cur[i];
+            break;
+        }
+        ++count;
     }
-    ++count;
-  }
-
   if(stories){
     var popupBody=document.createElement('body');
     var settings=document.createElement('div');
@@ -74,6 +72,15 @@ function contentListen(request, sender){
   if(request.from=='background savestories'){
     //alert('content listener: from background');
     //sendResponse({"name":"Петя"});
+    if(request.download){
+      if(request.download.filename){
+      downloadContent(request.download.url, request.download.filename);
+    }
+    else {
+      downloadContent(request.download.url);
+    }
+      return;
+    }
     var script=document.createElement('script');
     script.type='text/javascript';
     script.async=true;
@@ -94,3 +101,13 @@ window.addEventListener("message", function(event) {
     }
   }
 });
+
+function downloadContent(url, filename=""){
+  let link=document.createElement('a');
+  link.href = url;
+  if(filename==""){
+    filename=url.substr(url.lastIndexOf('/') + 1);
+  }
+  link.download = filename;
+  link.click();
+}
