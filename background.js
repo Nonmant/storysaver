@@ -21,6 +21,7 @@ function sendBackground(tabId){
 
 function backgroundListen(message){
   //alert('background listener');
+
   if(message.from)
   switch (message.from) {
 
@@ -30,8 +31,37 @@ function backgroundListen(message){
       //alert('background received non-null popupBody');
       //alert(message.popupBody);
       var views = chrome.extension.getViews({type: "popup"});
+
+      //safeResponse begin
+      var parser = new DOMParser;
+      var tmpDom = parser.parseFromString(message.popupBody, "text/html").body;
+      //getting rid of unsafe nodes
+      var list = tmpDom.querySelectorAll("script,img");
+
+      for (var i = list.length - 1; i >= 0; i--) {
+        list[i].remove();
+      }
+      //leaving just safe attributes
+      list = tmpDom.getElementsByTagName("*");
+      var validAttrs = [ "class", "id", "style" ];
+
+      for (var i = list.length - 1; i >= 0; i--) {
+        target=list[i];
+
+        var attrs = target.attributes, currentAttr;
+
+        for (var i = attrs.length - 1; i >= 0; i--) {
+          currentAttr = attrs[i].name;
+
+          if (attrs[i].specified && validAttrs.indexOf(currentAttr) === -1) {
+            target.removeAttribute(currentAttr);
+          }
+        }
+      }
+      //safeResponse end
       for (var i in views) {
-        views[i].document.body.innerHTML = message.popupBody;
+        //views[i].document.body.innerHTML = message.popupBody;
+        views[i].document.body=tmpDom;
       }
     }
     else {
