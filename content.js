@@ -1,16 +1,15 @@
 var makeBody=function(){
   //alert('document: script run');
-  var stories, count=0;
+  var stories=[], count=0;
 
   for(var i in cur){
     if(Object.keys(cur)[count].indexOf("stories_list")!=-1){
-      stories=cur[i];
-      break;
+      stories.push.apply(stories,cur[i]);
     }
     ++count;
   }
 
-  if(stories){
+  if(stories.length){
     var popupBody=document.createElement('body');
     var settings=document.createElement('div');
     settings.className='settings';
