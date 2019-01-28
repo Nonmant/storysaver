@@ -61,17 +61,21 @@ function downloadPopup(text){
   });
 }
 function onPopupClick(e){
-    var target = e.target;
-    if (target == null) {
-        return;
-    }
+  var target = e.target;
+
+  if(!target){
+    return -1;
+  }
+
   while ((!target.id)&&(target!=document.body)) {
     if(target.className=='settings'){
       openSettings();
+      return 0;
     }
     target=target.parentElement;
   }
   downloadPopup(target.id);
+  return 0;
 }
 document.onclick = onPopupClick;
 function openSettings() {
