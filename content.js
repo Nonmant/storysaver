@@ -56,7 +56,7 @@ var makeBody=function(){
     }
     var aHome=document.createElement('a');
     aHome.href='https://vk.com/savestories';
-    aHome.innerText='О\u00a0расширении';
+    aHome.innerText='🏠';
     aHome.target='_blank';
     popupBody.appendChild(aHome);
     window.postMessage({from:'document savestories', popupBody:popupBody.innerHTML}, '*');

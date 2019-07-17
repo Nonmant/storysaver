@@ -78,12 +78,3 @@ a:visited{
     text-decoration: none;
     color: #2a5885;
 }
-
-#ad{
-  color: black;
-  opacity: 0.3;
-  transition: opacity 160ms linear;
-}
-#ad:hover{
-  opacity: 1;
-}
