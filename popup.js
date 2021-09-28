@@ -1,5 +1,5 @@
 window.onload = function() {
-  //alert('popup is loaded!');
+  console.log('[storysaver]:','popup is loaded!');
   let noStorage=true;
   if(chrome.storage){
     if (chrome.storage.local) {
