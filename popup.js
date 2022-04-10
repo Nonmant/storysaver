@@ -42,7 +42,7 @@ window.onload = function() {
 function downloadPopup(text){
   var downloadArray=text.split(',');
   for(var i in downloadArray){
-    if(downloadArray[i]&&(downloadArray[i].indexOf('.jpg')!=-1||downloadArray[i].indexOf('.mp4')!=-1))chrome.downloads.download({url: downloadArray[i]});
+    chrome.downloads.download({url: downloadArray[i]});
   }
 }
 function onPopupClick(e){

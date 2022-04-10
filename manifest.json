@@ -5,7 +5,7 @@
   "author": "Anton Bolotskikh",
   "description": "Сохраняйте истории с vk.com. Анонимно.",
   "homepage_url": "https://vk.com/savestories",
-  "version": "0.71",
+  "version": "0.72",
   "icons": {
     "16": "16.png",
     "24": "24.png",
