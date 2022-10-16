@@ -2,9 +2,39 @@ var makeBody=function(){
   console.log('[storysaver]:','document: script run');
   var stories=[], count=0;
 
+  if(!('Stories' in window)){
+    if(!('storiesPreloadAttempt' in window)){
+      window.storiesPreloadAttempt = 1;
+    }
+    window.storiesPreloadStatic();
+
+    if(window.storiesPreloadAttempt < 10){
+      console.log('[storysaver]:','document: storiesPreloadAttempt ' + window.storiesPreloadAttempt);
+      window.storiesPreloadAttempt += 1;
+      setTimeout(() => {window.savestoriesMakeBody();}, 100);
+      return;
+    }
+  } else {
+    console.log('[storysaver]:','document: storiesPreloadStatic');
+    if(!('storiesFetchListPromise' in window)){
+      window.storiesFetchListPromise = window.Stories.fetchList('owner_feed'+cur.oid);
+      window.storiesFetchListPromise.then(
+        ()=>{
+          console.log('[storysaver]:','document: storiesFetchListPromise success');
+          window.savestoriesMakeBody();
+        },
+        ()=>{
+          console.log('[storysaver]:','document: storiesFetchListPromise failure: ', window.storiesFetchListPromise);
+          window.savestoriesMakeBody();
+        });
+      return;
+    }
+  }
+
   for(var i in cur){
     if(Object.keys(cur)[count].indexOf("stories_list")!=-1){
       stories.push.apply(stories,cur[i]);
+      console.log('[storysaver]:','document: found stories in cur.' + i);
     }
     ++count;
   }
@@ -80,6 +110,9 @@ var makeBody=function(){
     window.postMessage({from:'document savestories', popupBody:'none'}, '*');
   }
   document.head.removeChild(document.getElementById('savestories'));
+  if('storiesPreloadAttempt' in window) delete window.storiesPreloadAttempt;
+  if('storiesFetchListPromise' in window) delete window.storiesFetchListPromise;
+  delete window.savestoriesMakeBody;
 };
 
 
@@ -91,7 +124,7 @@ function contentListen(request, sender){
     var script=document.createElement('script');
     script.type='text/javascript';
     script.async=true;
-    script.text=String(makeBody).slice(12, -1);
+    script.text='window.savestoriesMakeBody=' + String(makeBody) + '; window.savestoriesMakeBody();';
     script.id='savestories';
     document.head.appendChild(script);
   }
