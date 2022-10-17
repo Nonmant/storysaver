@@ -17,17 +17,19 @@ var makeBody=function(){
   } else {
     console.log('[storysaver]:','document: storiesPreloadStatic');
     if(!('storiesFetchListPromise' in window)){
-      window.storiesFetchListPromise = window.Stories.fetchList('owner_feed'+cur.oid);
-      window.storiesFetchListPromise.then(
-        ()=>{
-          console.log('[storysaver]:','document: storiesFetchListPromise success');
-          window.savestoriesMakeBody();
-        },
-        ()=>{
-          console.log('[storysaver]:','document: storiesFetchListPromise failure: ', window.storiesFetchListPromise);
-          window.savestoriesMakeBody();
-        });
-      return;
+      if('oid' in cur && cur.oid > 0 && (!('user_id' in cur) || cur.user_id != cur.oid)){
+        window.storiesFetchListPromise = window.Stories.fetchList('owner_feed'+cur.oid);
+        window.storiesFetchListPromise.then(
+          ()=>{
+            console.log('[storysaver]:','document: storiesFetchListPromise success');
+            window.savestoriesMakeBody();
+          },
+          ()=>{
+            console.log('[storysaver]:','document: storiesFetchListPromise failure: ', window.storiesFetchListPromise);
+            window.savestoriesMakeBody();
+          });
+        return;
+      }
     }
   }
 
